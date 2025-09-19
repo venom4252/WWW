@@ -13,7 +13,6 @@
       min-height: 100vh;
     }
 
-    /* Сияющая золотая рамка с более скруглёнными углами */
     body::before {
       content: "";
       position: absolute;
@@ -22,7 +21,7 @@
       right: 20px;
       bottom: 20px;
       border: 5px solid transparent;
-      border-radius: 35px; /* было 15px — стало более мягко */
+      border-radius: 35px;
       background: linear-gradient(270deg, gold, orange, gold, #ffd700) border-box;
       background-size: 600% 600%;
       animation: shine 8s linear infinite;
@@ -42,7 +41,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Контейнер для содержимого */
     .content {
       position: relative;
       z-index: 1;
@@ -67,8 +65,8 @@
       background: #333;
       color: #fff;
       box-shadow: 0 0 15px rgba(0,0,0,0.6);
-      border-radius: 20px 20px 0 0; /* верхние углы скруглены */
-      overflow: hidden; /* чтобы скругление обрезало фон */
+      border-radius: 20px 20px 0 0;
+      overflow: hidden;
     }
 
     th, td {
@@ -100,14 +98,12 @@
     }
   </style>
   <script>
-    // Блокируем правый клик
     document.addEventListener("contextmenu", event => event.preventDefault());
 
-    // Блокируем горячие клавиши просмотра кода
     document.onkeydown = function(e) {
-      if (e.keyCode == 123) return false; // F12
+      if (e.keyCode == 123) return false;
       if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) return false;
-      if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U
+      if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
     }
   </script>
 </head>
@@ -116,7 +112,6 @@
   <div class="content">
     <h2>Список ребят</h2>
 
-    <!-- Таблица -->
     <table>
       <tr>
         <th colspan="5">Список ребят</th>
@@ -152,7 +147,6 @@
       </tr>
     </table>
 
-    <!-- Список -->
     <h3>Это список моих задач:</h3>
     <ol>
       <li>Сделать домашнее задание по WEB.</li>
