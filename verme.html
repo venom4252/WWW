@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>ZedoGame</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Impact, sans-serif;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+  }
+
+  /* Фон с размытием */
+  .bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url("i.jpg") no-repeat center/cover;
+    filter: blur(6px) brightness(0.6);
+    z-index: -1;
+  }
+
+  h1 {
+    position: absolute;
+    top: 30px;
+    font-size: 64px;
+    color: #fff;
+    text-shadow: 3px 3px 8px black;
+    letter-spacing: 3px;
+  }
+
+  .play-btn {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #f00;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.7);
+    transition: 0.15s;
+    position: relative;
+  }
+
+  .play-btn:hover {
+    transform: scale(1.15) rotate(-3deg);
+    background: #f60;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.9);
+  }
+
+  .play-btn::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 40px solid #fff;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    margin-left: 5px;
+  }
+
+  .settings-btn {
+    position: absolute;
+    right: 30px;
+    top: 40%;
+    padding: 15px 25px;
+    font-size: 20px;
+    border: none;
+    border-radius: 12px;
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    transition: 0.2s;
+  }
+
+  .settings-btn:hover {
+    transform: scale(1.1);
+    background: #444;
+  }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<h1>ZedoGame</h1>
+<button class="play-btn" onclick="window.location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'"></button>
+<button class="settings-btn">⚙ Настройки</button>
+</body>
+</html>
