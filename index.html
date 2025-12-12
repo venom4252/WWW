@@ -2,96 +2,328 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>ZedoGame</title>
+<title>Задачи</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
-  body {
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
     margin: 0;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #0f0f10;
+    color: #eaeaea;
     height: 100vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: Impact, sans-serif;
     overflow: hidden;
-    position: relative;
-    background: #000;
-  }
+}
 
-  /* Фон с размытием */
-  .bg {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: url("i.jpg") no-repeat center/cover;
-    filter: blur(6px) brightness(0.6);
-    z-index: -1;
-  }
-
-  h1 {
-    position: absolute;
-    top: 30px;
-    font-size: 64px;
-    color: #fff;
-    text-shadow: 3px 3px 8px black;
-    letter-spacing: 3px;
-  }
-
-  .play-btn {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background: #f00;
-    border: none;
-    cursor: pointer;
+.main {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.7);
-    transition: 0.15s;
-    position: relative;
-  }
+}
 
-  .play-btn:hover {
-    transform: scale(1.15) rotate(-3deg);
-    background: #f60;
-    box-shadow: 0 12px 25px rgba(0,0,0,0.9);
-  }
+.container {
+    width: 420px;
+    background: #1a1a1c;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 25px 60px rgba(0,0,0,.6);
+}
 
-  .play-btn::before {
-    content: "";
-    width: 0;
-    height: 0;
-    border-left: 40px solid #fff;
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
-    margin-left: 5px;
-  }
+h1 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
 
-  .settings-btn {
-    position: absolute;
-    right: 30px;
-    top: 40%;
-    padding: 15px 25px;
-    font-size: 20px;
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+input {
+    flex: 1;
+    background: #2a2a2d;
     border: none;
     border-radius: 12px;
-    background: #111;
+    padding: 12px 14px;
     color: #fff;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    transition: 0.2s;
-  }
+    font-size: 14px;
+    outline: none;
+}
 
-  .settings-btn:hover {
-    transform: scale(1.1);
-    background: #444;
-  }
+input::placeholder {
+    color: #9a9a9a;
+}
+
+button {
+    background: #3a3a3d;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform .1s ease, background .2s ease;
+}
+
+button:active {
+    transform: scale(0.95);
+    background: #2f2f32;
+}
+
+.search {
+    margin-bottom: 16px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    background: #242427;
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn .25s ease;
+    cursor: grab;
+}
+
+li.dragging {
+    opacity: 0.4;
+}
+
+li span {
+    font-size: 14px;
+}
+
+.task-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.task-buttons button {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.delete {
+    background: #402222;
+}
+
+.highlight {
+    color: #ffd479;
+}
+
+.empty {
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+    margin-top: 20px;
+    display: none;
+}
+
+.editor {
+    width: 320px;
+    background: rgba(21,21,23,.85);
+    backdrop-filter: blur(12px);
+    border-left: 1px solid #222;
+    padding: 24px;
+    position: absolute;
+    right: -320px;
+    top: 0;
+    height: 100%;
+    transition: right .35s ease;
+}
+
+.editor.active {
+    right: 0;
+}
+
+.editor h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.editor textarea {
+    width: 100%;
+    height: 120px;
+    background: #2a2a2d;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    color: #fff;
+    resize: none;
+    font-family: Inter;
+    outline: none;
+    margin-bottom: 12px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 </style>
 </head>
 <body>
-<div class="bg"></div>
-<h1>ZedoGame</h1>
-<button class="play-btn" onclick="window.location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'"></button>
-<button class="settings-btn">⚙ Настройки</button>
+
+<div class="main">
+    <div class="container">
+        <h1>Задачи</h1>
+
+        <div class="input-group">
+            <input id="taskInput" placeholder="Новая задача">
+            <button onclick="addTask()">Добавить</button>
+        </div>
+
+        <input class="search" id="searchInput" placeholder="Поиск по задачам">
+
+        <ul id="taskList"></ul>
+        <div class="empty" id="empty">Ничего не найдено</div>
+    </div>
+</div>
+
+<div class="editor" id="editor">
+    <h2>Редактирование</h2>
+    <textarea id="editText"></textarea>
+    <button onclick="saveEdit()">Сохранить</button>
+    <button onclick="closeEditor()">Отмена</button>
+</div>
+
+<script>
+let editElement = null;
+let draggedItem = null;
+
+function addTask() {
+    const input = document.getElementById("taskInput");
+    const text = input.value.trim();
+    if (!text) return;
+
+    const li = document.createElement("li");
+    li.draggable = true;
+
+    li.innerHTML = `
+        <span>${text}</span>
+        <div class="task-buttons">
+            <button onclick="openEditor(this)">✏️</button>
+            <button class="delete" onclick="deleteTask(this)">✖</button>
+        </div>
+    `;
+
+    addDragAndDrop(li);
+
+    document.getElementById("taskList").appendChild(li);
+    input.value = "";
+    filterTasks();
+}
+
+function deleteTask(btn) {
+    btn.closest("li").remove();
+    filterTasks();
+}
+
+function openEditor(btn) {
+    editElement = btn.closest("li");
+    document.getElementById("editText").value =
+        editElement.querySelector("span").textContent;
+
+    document.getElementById("editor").classList.add("active");
+}
+
+function saveEdit() {
+    const text = document.getElementById("editText").value.trim();
+    if (!text) return;
+
+    editElement.remove();
+    closeEditor();
+
+    document.getElementById("taskInput").value = text;
+    addTask();
+}
+
+function closeEditor() {
+    editElement = null;
+    document.getElementById("editor").classList.remove("active");
+}
+
+document.getElementById("searchInput").addEventListener("input", filterTasks);
+
+function filterTasks() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+    const tasks = document.querySelectorAll("li");
+    let visible = 0;
+
+    tasks.forEach(task => {
+        const span = task.querySelector("span");
+        const text = span.textContent.toLowerCase();
+
+        if (text.includes(query)) {
+            task.style.display = "flex";
+            visible++;
+
+            if (query) {
+                span.innerHTML = span.textContent.replace(
+                    new RegExp(query, "gi"),
+                    m => `<span class="highlight">${m}</span>`
+                );
+            }
+        } else {
+            task.style.display = "none";
+        }
+    });
+
+    document.getElementById("empty").style.display =
+        visible === 0 ? "block" : "none";
+}
+
+function addDragAndDrop(item) {
+    item.addEventListener("dragstart", () => {
+        draggedItem = item;
+        item.classList.add("dragging");
+    });
+
+    item.addEventListener("dragend", () => {
+        draggedItem = null;
+        item.classList.remove("dragging");
+    });
+
+    item.addEventListener("dragover", e => {
+        e.preventDefault();
+        const list = item.parentNode;
+        const items = [...list.querySelectorAll("li:not(.dragging)")];
+        const nextItem = items.find(i => e.clientY <= i.offsetTop + i.offsetHeight / 2);
+        list.insertBefore(draggedItem, nextItem);
+    });
+}
+
+document.getElementById("taskInput")
+    .addEventListener("keydown", e => e.key === "Enter" && addTask());
+
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", e => {
+    if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key)) ||
+        (e.ctrlKey && e.key === "u")
+    ) e.preventDefault();
+});
+</script>
+
 </body>
 </html>
